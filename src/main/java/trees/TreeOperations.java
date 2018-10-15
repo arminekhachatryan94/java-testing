@@ -3,7 +3,6 @@ package trees;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class TreeOperations<A> {
@@ -32,12 +31,12 @@ public class TreeOperations<A> {
     public <A> ArrayList<A> DFS(final Node<A> node){
         ArrayList<A> depth = new ArrayList<A>();
         helperDFS(node, depth);
-        return breadth;
+        return depth;
     }
     
     public <A> void helperDFS(final Node<A> node, ArrayList<A> depth){
         if( node != null ){
-            breadth.add(node.getContents());
+            depth.add(node.getContents());
             helperDFS(node.getLeftChild(), depth);
             helperDFS(node.getRightChild(), depth);
         }

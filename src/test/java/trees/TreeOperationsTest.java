@@ -10,9 +10,16 @@ import org.junit.Test;
 
 public class TreeOperationsTest {
     public String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-             + "abcdefghijklmnopqrstuvwxyz"
-             + "0123456789";
-
+        + "abcdefghijklmnopqrstuvwxyz"
+        + "0123456789";
+    
+    @Test
+    public void bfs_tree_with_null_returns_empty_arraylist() {
+        TreeOperations<Integer> tree = new TreeOperations<Integer>();
+        Node<Integer> n = null;
+        ArrayList<Integer> a = tree.bfs(n);
+        assertTrue(a.size() == 0);
+    }
     @Test
     public void bfs_tree_with_one_element_returns_arraylist_of_one_element() {
         TreeOperations<Integer> tree = new TreeOperations<Integer>();

@@ -16,6 +16,12 @@ public class TreeOperationsTest {
         + "abcdefghijklmnopqrstuvwxyz"
         + "0123456789";
     
+
+    public Node<Character> generateRandomNode() {
+        int rand_char = (int)(Math.random()*this.chars.length());
+        return new Node<Character>(this.chars.charAt(rand_char), null, null);
+    }
+
     @Test
     public void bfs_tree_with_null_returns_empty_arraylist() {
         TreeOperations<Integer> tree = new TreeOperations<Integer>();
@@ -64,21 +70,15 @@ public class TreeOperationsTest {
         }
     }
 
-    public Node<Character> generateRandomNode() {
-        Random rand_int = new Random();
-        Integer rand_char = rand_int.nextInt(this.chars.length()) + 1;
-        return new Node<Character>(this.chars.charAt(rand_char), null, null);
-    }
-
     @Test
     public void bfs_incomplete_binary_tree_returns_same_order_of_elements_as_as_original() {
         // generate random incomplete tree
         // https://www.careercup.com/question?id=5701069362429952
-        int num_nodes = (int) (Math.random() * 20 + 1);
+        int num_nodes = (int) (Math.random() * 20 ) + 1;
         Queue q = new LinkedList();
         q.add(generateRandomNode());
         ArrayList< Node<Character> > nodes = new ArrayList<>();
-        while( nodes.size() + q.size() + 4 < num_nodes && q.size() > 0 ){
+        while( nodes.size() + q.size() <= num_nodes && q.size() > 0 ){
             int c = (int) Math.random() * 4;
             Node<Character> temp = (Node<Character>)q.poll();
             if( c == 0 ){ // node is a leaf
@@ -110,5 +110,21 @@ public class TreeOperationsTest {
             assertTrue(nodes.get(i).getContents() == bfs.get(i));
         }
     }
-    
+
+    @Test
+    public void dfs_tree_with_null_returns_empty_arraylist() {
+        TreeOperations<Double> tree = new TreeOperations<Double>();
+        Node<Double> n = null;
+        ArrayList<Double> dfs = tree.dfs(n);
+        assertTrue(dfs.size() == 0);
+    }
+
+    @Test
+    public void dfs_tree_with_one_element_returns_arraylist_of_one_element() {
+        TreeOperations<Character> tree = new TreeOperations<Character>();
+        Node<Character> n = generateRandomNode();
+        ArrayList<Character> dfs = tree.dfs(n);
+        assertTrue(dfs.size() == 1);
+        assertEquals(n.getContents(), dfs.get(0));
+    }
 }

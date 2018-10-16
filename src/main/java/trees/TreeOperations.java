@@ -27,20 +27,18 @@ public class TreeOperations<A> {
         return breadth;
     }
 
-    /*
-    public <A> ArrayList<A> DFS(final Node<A> node){
-        ArrayList<A> depth = new ArrayList<A>();
+    public <A> ArrayList<A> dfs(final Node<A> node){
+        ArrayList<A> depth = new ArrayList<>();
         helperDFS(node, depth);
         return depth;
     }
     
-    public <A> void helperDFS(final Node<A> node, ArrayList<A> depth){
+    public <A> void helperDFS(Node<A> node, ArrayList<A> depth){
         if( node != null ){
             depth.add(node.getContents());
             helperDFS(node.getLeftChild(), depth);
             helperDFS(node.getRightChild(), depth);
         }
     }
-    */
 }
 

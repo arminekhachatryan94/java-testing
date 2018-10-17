@@ -40,7 +40,7 @@ public class TreeOperationsTest {
 
     @Test
     public void bfs_full_binary_tree_returns_same_order_of_elements_as_as_original() {
-        // generate random full tree and store in an array
+        // generate random full tree and store in an array (bfs order)
         // root of tree is indexed at 0
         int num_nodes = (int)Math.pow(2, 4) - 1;
         ArrayList< Node<String> > nodes = new ArrayList<>();
@@ -127,4 +127,41 @@ public class TreeOperationsTest {
         assertTrue(dfs.size() == 1);
         assertEquals(n.getContents(), dfs.get(0));
     }
+
+    public Node<String> createTree(ArrayList< Node<String> > nodes, int index, int num_nodes ){
+        if( index <= num_nodes ){
+            int rand_index = (int)(Math.random()*chars.length());
+            Node<String> ret = new Node(chars.charAt(rand_index) + "", null, null);
+            nodes.add(ret);
+            Node<String> left = createTree(nodes, index*2, num_nodes);
+            Node<String> right = createTree(nodes, index*2+1, num_nodes);
+            ret.setLeftChild(left);
+            ret.setRightChild(right);
+            return ret;
+        } else {
+            return null;
+        }
+    }
+    
+    @Test
+    public void dfs_full_binary_tree_returns_same_order_of_elements_as_as_original() {
+        // generate random full tree and store in an array (dfs order)
+        // root of tree is indexed at 0
+        int root = 4;
+        int num_nodes = (int)Math.pow(2, root) - 1;
+
+        ArrayList< Node<String> > nodes = new ArrayList<>();
+        createTree(nodes, 1, num_nodes);
+
+        // get bfs of random tree
+        TreeOperations<String> tree = new TreeOperations<String>();
+        ArrayList<String> dfs = tree.dfs(nodes.get(0));
+
+        // test results
+        assertTrue(dfs.size() == nodes.size());
+        for( int i = 0; i < dfs.size(); i++ ){
+            assertEquals(dfs.get(i), nodes.get(i).getContents());
+        }
+    }
+
 }

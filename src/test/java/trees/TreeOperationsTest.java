@@ -39,10 +39,10 @@ public class TreeOperationsTest {
     }
 
     @Test
-    public void bfs_full_binary_tree_returns_same_order_of_elements_as_as_original() {
+    public void bfs_full_binary_tree_returns_same_order_of_elements_as_original() {
         // generate random full tree and store in an array (bfs order)
         // root of tree is indexed at 0
-        int num_nodes = (int)Math.pow(2, 4) - 1;
+        int num_nodes = (int)Math.pow(2, 10) - 1;
         ArrayList< Node<String> > nodes = new ArrayList<>();
         for( int i = num_nodes; i >= 1; i-- ){
             Node<String> temp;
@@ -71,7 +71,7 @@ public class TreeOperationsTest {
     }
 
     @Test
-    public void bfs_incomplete_binary_tree_returns_same_order_of_elements_as_as_original() {
+    public void bfs_incomplete_binary_tree_returns_same_order_of_elements_as_original() {
         // generate random incomplete tree
         // https://www.careercup.com/question?id=5701069362429952
         int num_nodes = (int) (Math.random() * 20 ) + 1;
@@ -128,13 +128,13 @@ public class TreeOperationsTest {
         assertEquals(n.getContents(), dfs.get(0));
     }
 
-    public Node<String> createTree(ArrayList< Node<String> > nodes, int index, int num_nodes ){
+    public Node<String> createFullTree(ArrayList< Node<String> > nodes, int index, int num_nodes ){
         if( index <= num_nodes ){
             int rand_index = (int)(Math.random()*chars.length());
             Node<String> ret = new Node(chars.charAt(rand_index) + "", null, null);
             nodes.add(ret);
-            Node<String> left = createTree(nodes, index*2, num_nodes);
-            Node<String> right = createTree(nodes, index*2+1, num_nodes);
+            Node<String> left = createFullTree(nodes, index*2, num_nodes);
+            Node<String> right = createFullTree(nodes, index*2+1, num_nodes);
             ret.setLeftChild(left);
             ret.setRightChild(right);
             return ret;
@@ -144,14 +144,14 @@ public class TreeOperationsTest {
     }
     
     @Test
-    public void dfs_full_binary_tree_returns_same_order_of_elements_as_as_original() {
+    public void dfs_full_binary_tree_returns_same_order_of_elements_as_original() {
         // generate random full tree and store in an array (dfs order)
         // root of tree is indexed at 0
-        int root = 4;
+        int root = 10;
         int num_nodes = (int)Math.pow(2, root) - 1;
 
         ArrayList< Node<String> > nodes = new ArrayList<>();
-        createTree(nodes, 1, num_nodes);
+        createFullTree(nodes, 1, num_nodes);
 
         // get bfs of random tree
         TreeOperations<String> tree = new TreeOperations<String>();
@@ -164,4 +164,53 @@ public class TreeOperationsTest {
         }
     }
 
+    public Node<Double> createIncompleteTree(ArrayList< Node<Double> > nodes, int current_depth, int depth ){
+        if( current_depth <= depth ){
+            double min = 0;
+            double max = 50;
+            Random rand = new Random();
+            double rand_double = min+(max-min)*rand.nextDouble();
+            Node<Double> ret = new Node(rand_double, null, null);
+            nodes.add(ret);
+
+            int children = (int) (Math.random()*4);
+            // System.out.println(children);
+            if( children == 0 ){
+                ;
+            } else if( children == 1 ){
+                Node<Double> left = createIncompleteTree(nodes, current_depth+1, depth);
+                ret.setLeftChild(left);
+            } else if( children == 2 ){
+                Node<Double> right = createIncompleteTree(nodes, current_depth+1, depth);
+                ret.setRightChild(right);
+            } else if( children == 3 ){
+                Node<Double> left = createIncompleteTree(nodes, current_depth+1, depth);
+                Node<Double> right = createIncompleteTree(nodes, current_depth+1, depth);
+                ret.setLeftChild(left);
+                ret.setRightChild(right);
+            }
+            return ret;
+        } else {
+            return null;
+        }
+    }
+
+    public void dfs_incomplete_binary_tree_returns_same_order_of_elements_as_original(){
+        // generate random incomplete tree and store in an array (dfs order)
+        // root of tree is indexed at 0
+        int depth = 10;
+
+        ArrayList< Node<Double> > nodes = new ArrayList<>();
+        createIncompleteTree(nodes, 0, depth);
+
+        // get bfs of random tree
+        TreeOperations<Double> tree = new TreeOperations<Double>();
+        ArrayList<Double> dfs = tree.dfs(nodes.get(0));
+
+        // test results
+        System.out.println(nodes.size());
+        for( int i = 0; i < dfs.size(); i++ ){
+            System.out.println(nodes.get(i) + ", left: " + nodes.get(i).getLeftChild() + ", right: " + nodes.get(i).getRightChild());
+        }
+    }
 }

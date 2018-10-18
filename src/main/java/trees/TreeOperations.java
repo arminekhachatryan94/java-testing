@@ -40,5 +40,26 @@ public class TreeOperations<A> {
             helperDFS(node.getRightChild(), depth);
         }
     }
+
+    public static <A> int maxDepth(final Node<A> root){
+        if( root == null ){
+            return -1;
+        }
+        int max_depth = 0;
+        helperMaxDepth(root, 0, max_depth);
+        return max_depth;
+    }
+
+    public static <A> void helperMaxDepth(Node<A> root, int current_depth, int max_depth){
+        if( current_depth > max_depth ){
+            max_depth = current_depth;
+        }
+        if( root.getLeftChild() != null ){
+            helperMaxDepth(root.getLeftChild(), current_depth+1, max_depth);
+        }
+        if( root.getRightChild() != null ){
+            helperMaxDepth(root.getRightChild(), current_depth+1, max_depth);
+        }
+    }
 }
 

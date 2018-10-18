@@ -213,4 +213,13 @@ public class TreeOperationsTest {
             System.out.println(nodes.get(i) + ", left: " + nodes.get(i).getLeftChild() + ", right: " + nodes.get(i).getRightChild());
         }
     }
+
+    @Test
+    public void max_depth_on_empty_binary_tree_returns_negative_one() {
+        Node<Double> n = null;
+
+        TreeOperations<Double> tree = new TreeOperations<Double>();
+        int max_depth = tree.maxDepth(n);
+        assertEquals(max_depth, -1);
+    }
 }

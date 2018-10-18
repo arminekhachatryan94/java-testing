@@ -222,4 +222,13 @@ public class TreeOperationsTest {
         int max_depth = tree.maxDepth(n);
         assertEquals(max_depth, -1);
     }
+
+    @Test
+    public void max_depth_on_binary_tree_with_one_element_returns_zero() {
+        Node<Double> n = new Node(1, null, null);
+
+        TreeOperations<Double> tree = new TreeOperations<Double>();
+        int max_depth = tree.maxDepth(n);
+        assertEquals(max_depth, 0);
+    }
 }

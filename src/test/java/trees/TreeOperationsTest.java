@@ -208,9 +208,9 @@ public class TreeOperationsTest {
         ArrayList<Double> dfs = tree.dfs(nodes.get(0));
 
         // test results
-        System.out.println(nodes.size());
+        assertEquals(nodes.size(), dfs.size());
         for( int i = 0; i < dfs.size(); i++ ){
-            System.out.println(nodes.get(i) + ", left: " + nodes.get(i).getLeftChild() + ", right: " + nodes.get(i).getRightChild());
+            assertEquals(nodes.get(i).getContents(), dfs.get(i));
         }
     }
 
@@ -230,5 +230,20 @@ public class TreeOperationsTest {
         TreeOperations<Double> tree = new TreeOperations<Double>();
         int max_depth = tree.maxDepth(n);
         assertEquals(max_depth, 0);
+    }
+
+    @Test
+    public void max_depth_on_binary_tree_with_fixed_depth_n_returns_n() {
+        // generate full binary tree
+        int depth = (int)(Math.random()*10);
+        int num_nodes = (int)Math.pow(2, depth) - 1;
+
+        ArrayList< Node<String> > nodes = new ArrayList<>();
+        Node<String> n = createFullTree(nodes, 1, num_nodes);
+
+        // test
+        TreeOperations<String> tree = new TreeOperations<String>();
+        int max_depth = tree.maxDepth(n);
+        assertEquals(depth-1, max_depth);
     }
 }

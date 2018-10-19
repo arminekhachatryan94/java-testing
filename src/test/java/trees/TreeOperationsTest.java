@@ -16,6 +16,7 @@ public class TreeOperationsTest {
         + "abcdefghijklmnopqrstuvwxyz"
         + "0123456789";
     
+    public int MAX_DEPTH = 0;
 
     public Node<Character> generateRandomNode() {
         int rand_char = (int)(Math.random()*this.chars.length());
@@ -166,6 +167,9 @@ public class TreeOperationsTest {
 
     public Node<Double> createIncompleteTree(ArrayList< Node<Double> > nodes, int current_depth, int depth ){
         if( current_depth <= depth ){
+            if( current_depth > this.MAX_DEPTH ){
+                this.MAX_DEPTH = current_depth;
+            }
             double min = 0;
             double max = 50;
             Random rand = new Random();
@@ -174,7 +178,6 @@ public class TreeOperationsTest {
             nodes.add(ret);
 
             int children = (int) (Math.random()*4);
-            // System.out.println(children);
             if( children == 0 ){
                 ;
             } else if( children == 1 ){
@@ -245,5 +248,20 @@ public class TreeOperationsTest {
         TreeOperations<String> tree = new TreeOperations<String>();
         int max_depth = tree.maxDepth(n);
         assertEquals(depth-1, max_depth);
+    }
+
+    @Test
+    public void max_depth_on_incomplete_binary_tree_returns_correct_max_depth() {
+        // generate full binary tree
+        int depth = (int)(Math.random()*10);
+        this.MAX_DEPTH = 0;
+
+        ArrayList< Node<Double> > nodes = new ArrayList<>();
+        Node<Double> n = createIncompleteTree(nodes, 0, depth);
+
+        // test
+        TreeOperations<Double> tree = new TreeOperations<Double>();
+        int max_depth = tree.maxDepth(n);
+        assertEquals(this.MAX_DEPTH, max_depth);
     }
 }

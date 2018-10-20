@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Test;
 
@@ -30,6 +31,7 @@ public class TreeOperationsTest {
         ArrayList<Integer> a = tree.bfs(n);
         assertTrue(a.size() == 0);
     }
+
     @Test
     public void bfs_tree_with_one_element_returns_arraylist_of_one_element() {
         TreeOperations<Integer> tree = new TreeOperations<Integer>();
@@ -250,6 +252,76 @@ public class TreeOperationsTest {
         assertEquals(depth-1, max_depth);
     }
 
+    public Node<Double> generateTreeWithLeftChildren(int current_depth, int depth) {
+        if( current_depth <= depth ){
+            Random rand = new Random();
+            Node<Double> ret = new Node<Double>(rand.nextDouble()*10, null, null);
+            ret.setLeftChild(generateTreeWithLeftChildren(current_depth+1, depth));
+            return ret;
+        } else {
+            return null;
+        }
+    }
+
+    @Test
+    public void max_depth_on_binary_tree_with_left_children_returns_max_depth_on_left_branch() {
+        int depth = (int)(Math.random()*10);
+        Node<Double> n = generateTreeWithLeftChildren(0, depth);
+
+        TreeOperations<Double> tree = new TreeOperations<Double>();
+        int max_depth = tree.maxDepth(n);
+
+        Node<Double> left = n;
+        Node<Double> right = n;
+        while(left != null ){
+            assertTrue(left != null);
+            left = left.getLeftChild();
+        }
+        while(right != null ){
+            assertTrue(right != null);
+            right = right.getLeftChild();
+        }
+        assertTrue(left == null);
+        assertTrue(right == null);
+        
+        assertEquals(depth, max_depth);
+    }
+
+    public Node<Double> generateTreeWithRightChildren(int current_depth, int depth) {
+        if( current_depth <= depth ){
+            Random rand = new Random();
+            Node<Double> ret = new Node<Double>(rand.nextDouble()*10, null, null);
+            ret.setRightChild(generateTreeWithLeftChildren(current_depth+1, depth));
+            return ret;
+        } else {
+            return null;
+        }
+    }
+
+    @Test
+    public void max_depth_on_binary_tree_with_right_children_returns_max_depth_on_left_branch() {
+        int depth = (int)(Math.random()*10);
+        Node<Double> n = generateTreeWithRightChildren(0, depth);
+
+        TreeOperations<Double> tree = new TreeOperations<Double>();
+        int max_depth = tree.maxDepth(n);
+
+        Node<Double> left = n;
+        Node<Double> right = n;
+        while(left != null ){
+            assertTrue(left != null);
+            left = left.getLeftChild();
+        }
+        while(right != null ){
+            assertTrue(right != null);
+            right = right.getLeftChild();
+        }
+        assertTrue(left == null);
+        assertTrue(right == null);
+
+        assertEquals(depth, max_depth);
+    }
+
     @Test
     public void max_depth_on_incomplete_binary_tree_returns_correct_max_depth() {
         // generate full binary tree
@@ -264,4 +336,86 @@ public class TreeOperationsTest {
         int max_depth = tree.maxDepth(n);
         assertEquals(this.MAX_DEPTH, max_depth);
     }
+
+    @Test
+    public void node_with_left_and_right_children_pointing_to_null(){
+        Node<Character> n = new Node<Character>('c', null, null);
+        assertFalse(n == null);
+        assertFalse(n.getContents() == null);
+        assertTrue(n.getContents() instanceof Character);
+        assertTrue(n.getContents() == 'c');
+        assertTrue(n.getLeftChild() == null);
+        assertTrue(n.getRightChild() == null);
+    }
+
+    @Test
+    public void node_with_left_child_not_pointing_to_null(){
+        Node<String> m = new Node<String>("efgh", null, null);
+        assertFalse(m == null);
+        assertFalse(m.getContents() == null);
+        assertTrue(m.getContents() instanceof String);
+        assertTrue(m.getContents().equals("efgh"));
+        assertTrue(m.getLeftChild() == null);
+        assertTrue(m.getRightChild() == null);
+
+        Node<String> n = new Node<String>("abcd", m, null);
+        assertFalse(n == null);
+        assertFalse(n.getContents() == null);
+        assertTrue(n.getContents() instanceof String);
+        assertTrue(n.getContents().equals("abcd"));
+        assertFalse(n.getLeftChild() == null);
+        assertTrue(n.getLeftChild() == m);
+        assertTrue(n.getRightChild() == null);
+    }
+
+    @Test
+    public void node_with_right_child_not_pointing_to_null(){
+        Node<String> m = new Node<String>("efgh", null, null);
+        assertFalse(m == null);
+        assertFalse(m.getContents() == null);
+        assertTrue(m.getContents() instanceof String);
+        assertTrue(m.getContents().equals("efgh"));
+        assertTrue(m.getLeftChild() == null);
+        assertTrue(m.getRightChild() == null);
+
+        Node<String> n = new Node<String>("abcd", null, m);
+        assertFalse(n == null);
+        assertFalse(n.getContents() == null);
+        assertTrue(n.getContents() instanceof String);
+        assertTrue(n.getContents().equals("abcd"));
+        assertTrue(n.getLeftChild() == null);
+        assertFalse(n.getRightChild() == null);
+        assertTrue(n.getRightChild() == m);
+    }
+
+    @Test
+    public void node_with_left_and_right_children_not_pointing_to_null(){
+        Node<String> l = new Node<String>("efgh", null, null);
+        assertFalse(l == null);
+        assertFalse(l.getContents() == null);
+        assertTrue(l.getContents() instanceof String);
+        assertTrue(l.getContents().equals("efgh"));
+        assertTrue(l.getLeftChild() == null);
+        assertTrue(l.getRightChild() == null);
+
+        Node<String> m = new Node<String>("ijkl", null, null);
+        assertFalse(m == null);
+        assertFalse(m.getContents() == null);
+        assertTrue(m.getContents() instanceof String);
+        assertTrue(m.getContents().equals("ijkl"));
+        assertTrue(m.getLeftChild() == null);
+        assertTrue(m.getRightChild() == null);
+
+        Node<String> n = new Node<String>("abcd", l, m);
+        assertFalse(n == null);
+        assertFalse(n.getContents() == null);
+        assertTrue(n.getContents() instanceof String);
+        assertTrue(n.getContents().equals("abcd"));
+        assertFalse(n.getLeftChild() == null);
+        assertTrue(n.getLeftChild() == l);
+        assertFalse(n.getRightChild() == null);
+        assertTrue(n.getRightChild() == m);
+    }
+
+
 }

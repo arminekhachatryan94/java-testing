@@ -60,5 +60,20 @@ public class TreeOperations<A> {
             helperMaxDepth(root.getRightChild(), current_depth+1, max_depth);
         }
     }
+
+    public static <A> int nodeCount(final Node<A> root){
+        AtomicInteger count = new AtomicInteger(0);
+        countRecursion(root, count);
+        return count.get();
+    }
+
+    public static <A> void countRecursion(Node<A> root, AtomicInteger count){
+        if( root != null ){
+            count.set(count.get()+1);
+            countRecursion(root.getLeftChild(), count);
+            countRecursion(root.getRightChild(), count);
+        }
+    }
+
 }
 

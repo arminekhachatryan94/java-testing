@@ -453,4 +453,15 @@ public class TreeOperationsTest {
         int count = tree.nodeCount(n);
         assertEquals(count, depth+1);
     }
+
+    @Test
+    public void node_count_on_full_binary_tree_returns_number_of_nodes_in_the_tree() {
+        int num_nodes = (int)Math.pow(2, 10) - 1;
+        ArrayList< Node<String> > nodes = new ArrayList<>();
+        createFullTree(nodes, 1, num_nodes);
+
+        TreeOperations<String> tree = new TreeOperations<String>();
+        int count = tree.nodeCount(nodes.get(0));
+        assertEquals(count, num_nodes);
+    }
 }

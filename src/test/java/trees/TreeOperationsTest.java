@@ -464,4 +464,16 @@ public class TreeOperationsTest {
         int count = tree.nodeCount(nodes.get(0));
         assertEquals(count, num_nodes);
     }
+
+    @Test
+    public void node_count_on_incomplete_binary_tree_returns_number_of_nodes_in_the_tree() {
+        int num_nodes = (int)Math.pow(2, 10) - 1;
+        this.count_nodes = 0;
+        ArrayList< Node<Double> > nodes = new ArrayList<>();
+        Node<Double> n = createIncompleteTree(nodes, 1, num_nodes);
+
+        TreeOperations<Double> tree = new TreeOperations<Double>();
+        int count = tree.nodeCount(nodes.get(0));
+        assertEquals(count, this.count_nodes);
+    }
 }

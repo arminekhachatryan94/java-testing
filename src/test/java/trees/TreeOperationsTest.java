@@ -76,7 +76,6 @@ public class TreeOperationsTest {
     @Test
     public void bfs_incomplete_binary_tree_returns_same_order_of_elements_as_original() {
         // generate random incomplete tree
-        // https://www.careercup.com/question?id=5701069362429952
         int num_nodes = (int) (Math.random() * 20 ) + 1;
         Queue q = new LinkedList();
         q.add(generateRandomNode());
@@ -299,7 +298,7 @@ public class TreeOperationsTest {
     }
 
     @Test
-    public void max_depth_on_binary_tree_with_right_children_returns_max_depth_on_left_branch() {
+    public void max_depth_on_binary_tree_with_right_children_returns_max_depth_on_right_branch() {
         int depth = (int)(Math.random()*10);
         Node<Double> n = generateTreeWithRightChildren(0, depth);
 
@@ -338,7 +337,7 @@ public class TreeOperationsTest {
     }
 
     @Test
-    public void node_with_left_and_right_children_pointing_to_null(){
+    public void node_with_left_and_right_children_pointing_to_null() {
         Node<Character> n = new Node<Character>('c', null, null);
         assertFalse(n == null);
         assertFalse(n.getContents() == null);
@@ -349,7 +348,7 @@ public class TreeOperationsTest {
     }
 
     @Test
-    public void node_with_left_child_not_pointing_to_null(){
+    public void node_with_left_child_not_pointing_to_null() {
         Node<String> m = new Node<String>("efgh", null, null);
         assertFalse(m == null);
         assertFalse(m.getContents() == null);
@@ -369,7 +368,7 @@ public class TreeOperationsTest {
     }
 
     @Test
-    public void node_with_right_child_not_pointing_to_null(){
+    public void node_with_right_child_not_pointing_to_null() {
         Node<String> m = new Node<String>("efgh", null, null);
         assertFalse(m == null);
         assertFalse(m.getContents() == null);
@@ -389,7 +388,7 @@ public class TreeOperationsTest {
     }
 
     @Test
-    public void node_with_left_and_right_children_not_pointing_to_null(){
+    public void node_with_left_and_right_children_not_pointing_to_null() {
         Node<String> l = new Node<String>("efgh", null, null);
         assertFalse(l == null);
         assertFalse(l.getContents() == null);
@@ -417,5 +416,10 @@ public class TreeOperationsTest {
         assertTrue(n.getRightChild() == m);
     }
 
-
+    @Test
+    public void node_count_on_empty_tree_returns_0() {
+        Node<Double> n = null;
+        TreeOperations<Double> tree = new TreeOperations<Double>();
+        assertEquals(tree.nodeCount(n), 0);
+    }
 }

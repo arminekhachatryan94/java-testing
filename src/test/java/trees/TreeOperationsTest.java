@@ -433,4 +433,14 @@ public class TreeOperationsTest {
         int count = tree.nodeCount(n);
         assertEquals(count, 1);
     }
+
+    @Test
+    public void node_count_on_tree_with_only_left_children_returns_number_of_left_children_and_root() {
+        int depth = (int)(Math.random()*10);
+        Node<Double> n = generateTreeWithLeftChildren(0, depth);
+
+        TreeOperations<Double> tree = new TreeOperations<Double>();
+        int count = tree.nodeCount(n);
+        assertEquals(count, depth+1);
+    }
 }

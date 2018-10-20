@@ -18,6 +18,7 @@ public class TreeOperationsTest {
         + "0123456789";
     
     public int MAX_DEPTH = 0;
+    public int count_nodes = 0;
 
     public Node<Character> generateRandomNode() {
         int rand_char = (int)(Math.random()*this.chars.length());
@@ -177,6 +178,7 @@ public class TreeOperationsTest {
             double rand_double = min+(max-min)*rand.nextDouble();
             Node<Double> ret = new Node(rand_double, null, null);
             nodes.add(ret);
+            this.count_nodes++;
 
             int children = (int) (Math.random()*4);
             if( children == 0 ){
@@ -420,6 +422,15 @@ public class TreeOperationsTest {
     public void node_count_on_empty_tree_returns_0() {
         Node<Double> n = null;
         TreeOperations<Double> tree = new TreeOperations<Double>();
-        assertEquals(tree.nodeCount(n), 0);
+        int count = tree.nodeCount(n);
+        assertEquals(count, 0);
+    }
+
+    @Test
+    public void node_count_on_tree_with_one_node_returns_1() {
+        Node<Character> n = generateRandomNode();
+        TreeOperations<Double> tree = new TreeOperations<Double>();
+        int count = tree.nodeCount(n);
+        assertEquals(count, 1);
     }
 }

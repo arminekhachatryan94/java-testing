@@ -24,6 +24,20 @@ public class NatPropertiesTest {
     }
 
     /*
+      Identity Property
+      a + 0 = a = 0 + a
+    */
+    public void identityProperty(
+        @From(NatGenerator.class) @Size(max = 10) final Nat a,
+        @From(NatGenerator.class) @Size(min = 0, max = 0) final Nat zero
+    ) {
+        assertTrue(zero.isZero());
+        assertEquals(a.add(zero), a);
+        assertEquals(a, a.add(zero));
+        assertEquals(a.add(zero), a.add(zero));
+    }
+
+    /*
       Inverse Property
       a + (-a) = 0 = (-a) + a
     */

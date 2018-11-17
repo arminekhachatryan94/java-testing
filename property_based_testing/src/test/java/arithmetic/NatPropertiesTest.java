@@ -93,6 +93,18 @@ public class NatPropertiesTest {
     }
 
     /*
+      a * (b + c) = a * b + a * c
+    */
+    @Property
+    public void distributiveProperty(
+        @From(NatGenerator.class) @Size(max = 10) final Nat a,
+        @From(NatGenerator.class) @Size(max = 10) final Nat b,
+        @From(NatGenerator.class) @Size(max = 10) final Nat c
+    ) {
+        assertEquals(a.multiply(b.add(c)), (a.multiply(b)).add(a.multiply(c)));
+    }
+
+    /*
       a - a = 0
     */
     @Property

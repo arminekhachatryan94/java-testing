@@ -38,6 +38,7 @@ public class NatPropertiesTest {
 
     // { (a + a + ...) } b times == a * b
     // { (b + b + ...) } a times == b * a
+    // { (a + a + ...) } b times == { (b + b + ...) } a times
     @Property
     public void sumOfNumberWithItselfNTimesEqualsNumberMultipliedByN(
         @From(NatGenerator.class) @Size(min = 1, max = 10) final Nat a,
@@ -59,6 +60,7 @@ public class NatPropertiesTest {
 
         assertEquals(a_copy, a.multiply(b));
         assertEquals(b_copy, b.multiply(a));
+        assertEquals(a_copy, b_copy);
     }
 
     // TODO: write your properties below

@@ -22,13 +22,13 @@ public class NatPropertiesTest {
 
     // a + b == b + a
     @Property
-    public void additionCommutativeProperty(@From(NatGenerator.class) @Size(max = 10) final Nat a, @From(NatGenerator.class) @Size(max = 10) final Nat b) {
+    public void commutativeProperty(@From(NatGenerator.class) @Size(max = 10) final Nat a, @From(NatGenerator.class) @Size(max = 10) final Nat b) {
         assertEquals(a.add(b), b.add(a));
     }
 
     // (a + b) + c == a + (b + c)
     @Property
-    public void additionAssociativeProperty(
+    public void associativeProperty(
         @From(NatGenerator.class) @Size(max = 10) final Nat a,
         @From(NatGenerator.class) @Size(max = 10) final Nat b,
         @From(NatGenerator.class) @Size(max = 10) final Nat c
@@ -38,7 +38,7 @@ public class NatPropertiesTest {
 
     // a + a == 2 * a
     @Property
-    public void example(
+    public void SumOfNumberWithItselfEqualsNumberMulipliedByTwo(
         @From(NatGenerator.class) @Size(max = 10) final Nat a,
         @From(NatGenerator.class) @Size(min = 2, max = 2) final Nat two
     ) {

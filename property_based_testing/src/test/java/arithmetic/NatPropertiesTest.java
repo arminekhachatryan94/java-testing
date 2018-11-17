@@ -36,6 +36,15 @@ public class NatPropertiesTest {
         assertEquals((a.add(b)).add(c), a.add(b.add(c)));
     }
 
+    // a + a == 2 * a
+    @Property
+    public void example(
+        @From(NatGenerator.class) @Size(max = 10) final Nat a,
+        @From(NatGenerator.class) @Size(min = 2, max = 2) final Nat two
+    ) {
+        assertEquals(a.add(a), a.multiply(two));
+    }
+
     // { (a + a + ...) } b times == a * b
     // { (b + b + ...) } a times == b * a
     // { (a + a + ...) } b times == { (b + b + ...) } a times

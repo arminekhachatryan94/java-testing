@@ -14,21 +14,42 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(JUnitQuickcheck.class)
 public class NatPropertiesTest {
-    // a == a
+    /*
+      Reflexive Property
+      a == a
+    */
     @Property
     public void numberEqualsSelf(@From(NatGenerator.class) @Size(max = 10) final Nat a) {
         assertEquals(a, a);
     }
 
-    // a + b == b + a
+    /*
+      Commutative Property of Addition
+      a + b == b + a
+    */
     @Property
-    public void commutativeProperty(@From(NatGenerator.class) @Size(max = 10) final Nat a, @From(NatGenerator.class) @Size(max = 10) final Nat b) {
+    public void commutativePropertyAddition(@From(NatGenerator.class) @Size(max = 10) final Nat a, @From(NatGenerator.class) @Size(max = 10) final Nat b) {
         assertEquals(a.add(b), b.add(a));
     }
 
-    // (a + b) + c == a + (b + c)
+    /*
+      Commutative Property of Multiplication
+      a * b == b * a
+    */
     @Property
-    public void associativeProperty(
+    public void commutativePropertyMultiplication(
+        @From(NatGenerator.class) @Size(max = 10) final Nat a,
+        @From(NatGenerator.class) @Size(max = 10) final Nat b
+    ) {
+        assertEquals(a.multiply(b), b.multiply(a));
+    }
+
+    /*
+      Associative Property of Addition
+      (a + b) + c == a + (b + c)
+    */
+    @Property
+    public void associativePropertyAddition(
         @From(NatGenerator.class) @Size(max = 10) final Nat a,
         @From(NatGenerator.class) @Size(max = 10) final Nat b,
         @From(NatGenerator.class) @Size(max = 10) final Nat c
@@ -36,7 +57,22 @@ public class NatPropertiesTest {
         assertEquals((a.add(b)).add(c), a.add(b.add(c)));
     }
 
-    // a + a == 2 * a
+    /*
+      Associative Property of Multiplication
+      (a * b) * c == a * (b * c)
+    */
+    @Property
+    public void associativePropertyMultiplication(
+        @From(NatGenerator.class) @Size(max = 10) final Nat a,
+        @From(NatGenerator.class) @Size(max = 10) final Nat b,
+        @From(NatGenerator.class) @Size(max = 10) final Nat c
+    ) {
+        assertEquals((a.multiply(b)).multiply(c), a.multiply(b.multiply(c)));
+    }
+
+    /*
+      a + a == 2 * a
+    */
     @Property
     public void SumOfNumberWithItselfEqualsNumberMulipliedByTwo(
         @From(NatGenerator.class) @Size(max = 10) final Nat a,
@@ -45,9 +81,11 @@ public class NatPropertiesTest {
         assertEquals(a.add(a), a.multiply(two));
     }
 
-    // { (a + a + ...) } b times == a * b
-    // { (b + b + ...) } a times == b * a
-    // { (a + a + ...) } b times == { (b + b + ...) } a times
+    /*
+      { (a + a + ...) } b times == a * b
+      { (b + b + ...) } a times == b * a
+      { (a + a + ...) } b times == { (b + b + ...) } a times
+    */
     @Property
     public void sumOfNumberWithItselfNTimesEqualsNumberMultipliedByN(
         @From(NatGenerator.class) @Size(min = 1, max = 10) final Nat a,

@@ -47,16 +47,8 @@ public class NatPropertiesTest {
         @From(NatGenerator.class) @Size(min = 0, max = 0) final Nat zero
     ) {
         Nat neg_a = a.subtract(a).subtract(a);
-        // assertEquals(a.add(neg_a), zero);
-        // assertEquals(zero, a.add(neg_a));
-        // assertEquals(neg_a.add(a), zero);
-        // assertEquals(zero, neg_a.add(a));
         assertEquals(a.add(neg_a), neg_a.add(a));
         assertEquals(neg_a.add(a), a.add(neg_a));
-
-        // below assertions shouldn't pass
-        assertEquals(neg_a.add(a), a);
-        assertEquals(a, neg_a.add(a));
     }
 
     /*

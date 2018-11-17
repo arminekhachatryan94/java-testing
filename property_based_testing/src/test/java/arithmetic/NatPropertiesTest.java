@@ -33,7 +33,6 @@ public class NatPropertiesTest {
         @From(NatGenerator.class) @Size(min = 0, max = 0) final Nat zero
     ) {
         Nat neg_a = a.subtract(a).subtract(a);
-        System.out.println(a.add(neg_a).toString() + " " + neg_a.add(a).toString());
         // assertEquals(a.add(neg_a), zero);
         // assertEquals(zero, a.add(neg_a));
         // assertEquals(neg_a.add(a), zero);
@@ -91,6 +90,16 @@ public class NatPropertiesTest {
         @From(NatGenerator.class) @Size(max = 10) final Nat c
     ) {
         assertEquals((a.multiply(b)).multiply(c), a.multiply(b.multiply(c)));
+    }
+
+    /*
+      a - a = 0
+    */
+    @Property
+    public void numberMinusItselfIsZero(
+        @From(NatGenerator.class) @Size(max = 10) final Nat a
+    ) {
+        assertTrue(a.subtract(a).isZero());
     }
 
     /*

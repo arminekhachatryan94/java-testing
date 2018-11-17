@@ -46,9 +46,6 @@ public class NatPropertiesTest {
         int count_a = (int)(a.toString().chars().filter(ch -> ch == 'S').count());
         int count_b = (int)(b.toString().chars().filter(ch -> ch == 'S').count());
 
-        // long strAB = a.multiply(b).toString().chars().filter(ch -> ch == 'S').count();
-        // long strBA = b.multiply(a).toString().chars().filter(ch -> ch == 'S').count();
-
         Nat a_copy = a;
         Nat b_copy = b;
 

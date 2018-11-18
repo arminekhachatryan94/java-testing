@@ -59,6 +59,7 @@ public class NatPropertiesTest {
         @From(NatGenerator.class) @Size(max = 10) final Nat a,
         @From(NatGenerator.class) @Size(min = 1, max = 1) final Nat one
     ) {
+        assertTrue(one.isOne());
         assertEquals(a.multiply(one), a);
         assertEquals(a, a.multiply(one));
     }

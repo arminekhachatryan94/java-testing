@@ -24,10 +24,23 @@ public class NatPropertiesTest {
     }
 
     /*
-      Identity Property
+      Zero Product Property
+      a * 0 = 0
+    */
+    @Property
+    public void numberMultipliedByZeroEqualsZero(
+        @From(NatGenerator.class) @Size(max = 10) final Nat a,
+        @From(NatGenerator.class) @Size(min = 0, max = 0) final Nat zero
+    ) {
+        assertTrue((a.multiply(zero)).isZero());
+    }
+
+    /*
+      Identity Property of Addition
       a + 0 = a = 0 + a
     */
-    public void identityProperty(
+    @Property
+    public void identityPropertyOfAddition(
         @From(NatGenerator.class) @Size(max = 10) final Nat a,
         @From(NatGenerator.class) @Size(min = 0, max = 0) final Nat zero
     ) {
@@ -35,6 +48,19 @@ public class NatPropertiesTest {
         assertEquals(a.add(zero), a);
         assertEquals(a, a.add(zero));
         assertEquals(a.add(zero), a.add(zero));
+    }
+
+    /*
+      Identity Property of Multiplication
+      a * 1 = a = 1 * a
+    */
+    @Property
+    public void identityPropertyOfMultiplication(
+        @From(NatGenerator.class) @Size(max = 10) final Nat a,
+        @From(NatGenerator.class) @Size(min = 1, max = 1) final Nat one
+    ) {
+        assertEquals(a.multiply(one), a);
+        assertEquals(a, a.multiply(one));
     }
 
     /*
@@ -46,7 +72,7 @@ public class NatPropertiesTest {
         @From(NatGenerator.class) @Size(min = 5, max = 5) final Nat a,
         @From(NatGenerator.class) @Size(min = 0, max = 0) final Nat zero
     ) {
-        Nat neg_a = a.subtract(a).subtract(a);
+        Nat neg_a = a.subtract(a).subtract(a); // a - a - a = -a
         assertEquals(a.add(neg_a), neg_a.add(a));
         assertEquals(neg_a.add(a), a.add(neg_a));
     }

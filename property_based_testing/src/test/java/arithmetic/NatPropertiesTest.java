@@ -159,6 +159,7 @@ public class NatPropertiesTest {
     }
 
     /*
+      a > 0, b > 0
       { (a + a + ...) } b times == a * b
       { (b + b + ...) } a times == b * a
       { (a + a + ...) } b times == { (b + b + ...) } a times
@@ -168,6 +169,9 @@ public class NatPropertiesTest {
         @From(NatGenerator.class) @Size(min = 1, max = 10) final Nat a,
         @From(NatGenerator.class) @Size(min = 1, max = 10) final Nat b
     ) {
+        assertFalse(a.isZero());
+        assertFalse(b.isZero());
+
         int count_a = (int)(a.toString().chars().filter(ch -> ch == 'S').count());
         int count_b = (int)(b.toString().chars().filter(ch -> ch == 'S').count());
 

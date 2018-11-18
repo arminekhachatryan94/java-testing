@@ -21,6 +21,7 @@ public class NatPropertiesTest {
     @Property
     public void numberEqualsSelf(@From(NatGenerator.class) @Size(max = 10) final Nat a) {
         assertEquals(a, a);
+        assertTrue(a.equals(a));
     }
 
     /*

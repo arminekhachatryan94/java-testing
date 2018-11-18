@@ -36,7 +36,7 @@ public class NatPropertiesTest {
     }
 
     /*
-      Identity Property of Addition
+      Additive Identity Property
       a + 0 = a = 0 + a
     */
     @Property
@@ -51,7 +51,19 @@ public class NatPropertiesTest {
     }
 
     /*
-      Identity Property of Multiplication
+      a - 0 = a
+    */
+    @Property
+    public void numberMinusZeroEqualsItself(
+        @From(NatGenerator.class) @Size(max = 10) final Nat a,
+        @From(NatGenerator.class) @Size(min = 0, max = 0) final Nat zero
+    ) {
+        assertTrue(zero.isZero());
+        assertEquals(a.subtract(zero), a);
+    }
+
+    /*
+      Multiplication Identity Property
       a * 1 = a = 1 * a
     */
     @Property
@@ -76,6 +88,27 @@ public class NatPropertiesTest {
         Nat neg_a = a.subtract(a).subtract(a); // a - a - a = -a
         assertEquals(a.add(neg_a), neg_a.add(a));
         assertEquals(neg_a.add(a), a.add(neg_a));
+    }
+
+    /*
+      a - a = 0
+    */
+    @Property
+    public void numberMinusItselfIsZero(
+        @From(NatGenerator.class) @Size(max = 10) final Nat a
+    ) {
+        assertTrue(a.subtract(a).isZero());
+    }
+
+    /*
+      a + a == 2 * a
+    */
+    @Property
+    public void SumOfNumberWithItselfEqualsNumberMulipliedByTwo(
+        @From(NatGenerator.class) @Size(max = 10) final Nat a,
+        @From(NatGenerator.class) @Size(min = 2, max = 2) final Nat two
+    ) {
+        assertEquals(a.add(a), a.multiply(two));
     }
 
     /*
@@ -135,27 +168,6 @@ public class NatPropertiesTest {
         @From(NatGenerator.class) @Size(max = 10) final Nat c
     ) {
         assertEquals(a.multiply(b.add(c)), (a.multiply(b)).add(a.multiply(c)));
-    }
-
-    /*
-      a - a = 0
-    */
-    @Property
-    public void numberMinusItselfIsZero(
-        @From(NatGenerator.class) @Size(max = 10) final Nat a
-    ) {
-        assertTrue(a.subtract(a).isZero());
-    }
-
-    /*
-      a + a == 2 * a
-    */
-    @Property
-    public void SumOfNumberWithItselfEqualsNumberMulipliedByTwo(
-        @From(NatGenerator.class) @Size(max = 10) final Nat a,
-        @From(NatGenerator.class) @Size(min = 2, max = 2) final Nat two
-    ) {
-        assertEquals(a.add(a), a.multiply(two));
     }
 
     /*

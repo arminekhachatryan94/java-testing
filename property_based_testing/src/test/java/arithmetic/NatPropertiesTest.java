@@ -170,39 +170,6 @@ public class NatPropertiesTest {
     ) {
         assertEquals(a.multiply(b.add(c)), (a.multiply(b)).add(a.multiply(c)));
     }
-
-    /*
-      a > 0, b > 0
-      { (a + a + ...) } b times == a * b
-      { (b + b + ...) } a times == b * a
-      { (a + a + ...) } b times == { (b + b + ...) } a times
-    */
-    @Property
-    public void sumOfNumberWithItselfNTimesEqualsNumberMultipliedByN(
-        @From(NatGenerator.class) @Size(min = 1, max = 10) final Nat a,
-        @From(NatGenerator.class) @Size(min = 1, max = 10) final Nat b
-    ) {
-        assertFalse(a.isZero());
-        assertFalse(b.isZero());
-
-        int count_a = (int)(a.toString().chars().filter(ch -> ch == 'S').count());
-        int count_b = (int)(b.toString().chars().filter(ch -> ch == 'S').count());
-
-        Nat a_copy = a;
-        Nat b_copy = b;
-
-        for( int i = 1; i < count_b; i++ ){
-            a_copy = a_copy.add(a);
-        }
-
-        for( int i = 1; i < count_a; i++ ){
-            b_copy = b_copy.add(b);
-        }
-
-        assertEquals(a_copy, a.multiply(b));
-        assertEquals(b_copy, b.multiply(a));
-        assertEquals(a_copy, b_copy);
-    }
     
     /*
     a != 0, b != 0

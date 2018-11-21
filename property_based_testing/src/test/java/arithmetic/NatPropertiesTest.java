@@ -203,6 +203,70 @@ public class NatPropertiesTest {
         assertEquals(b_copy, b.multiply(a));
         assertEquals(a_copy, b_copy);
     }
+    
+    /*
+    a != 0, b != 0
+    if a < b is true, then b < a is false
+    */
+    @Property
+    public void nonZeroNumberIsLessThanAnotherNonZeroNumberOfGreaterValue(
+        @From(NatGenerator.class) @Size(min = 1, max = 5) final Nat a,
+        @From(NatGenerator.class) @Size(min = 6, max = 10) final Nat b
+    ) {
+        assertFalse(a.isZero());
+        assertFalse(b.isZero());
+        assertFalse(b.isOne());
+        assertTrue(a.lessThan(b));
+        assertFalse(b.lessThan(a));
+    }
+
+    /*
+    a != 0, b != 0
+    if a == b, then a < b and b < a are false
+    */
+    @Property
+    public void nonZeroNumberIsLessThanAnotherNonZeroNumberOfSameValue(
+        @From(NatGenerator.class) @Size(min = 5, max = 5) final Nat a,
+        @From(NatGenerator.class) @Size(min = 5, max = 5) final Nat b
+    ) {
+        assertFalse(a.isZero());
+        assertFalse(b.isZero());
+        assertFalse(a.isOne());
+        assertFalse(b.isOne());
+        assertFalse(a.lessThan(b));
+        assertFalse(b.lessThan(a));
+    }
+
+    /*
+    a = 0, b != 0
+    b < a is false and a < b is true
+    */
+    @Property
+    public void zeroIsLessThanNonZeroNumber(
+        @From(NatGenerator.class) @Size(min = 0, max = 0) final Nat zero,
+        @From(NatGenerator.class) @Size(min = 1, max = 10) final Nat b
+    ) {
+        assertTrue(zero.isZero());
+        assertFalse(b.isZero());
+        assertTrue(zero.lessThan(b));
+        assertFalse(b.lessThan(zero));
+    }
+
+    /*
+    a = 0, b = 0
+    b < a and a < b are false
+    */
+    @Property
+    public void zeroIsNotLessThanZero(
+        @From(NatGenerator.class) @Size(min = 0, max = 0) final Nat a,
+        @From(NatGenerator.class) @Size(min = 0, max = 0) final Nat b
+    ) {
+        assertTrue(a.isZero());
+        assertTrue(b.isZero());
+        assertFalse(a.lessThan(b));
+        assertFalse(b.lessThan(a));
+    }
+
 
     // TODO: write your properties below
     // Put a comment before them explaining what sort of property you're testing
